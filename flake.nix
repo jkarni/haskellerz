@@ -15,5 +15,15 @@
     packages = {
       haskellProject = haskell.callCabal2nix "myProject" ./. {};
     };
+    devShells = {
+      default = pkgs.mkShell {
+        packages = [
+          pkgs.cabal-install
+          pkgs.ormolu
+          pkgs.entr
+          (haskell.ghc.withPackages (p: inputs.self.packages.${system}.haskellProject.buildInputs))
+        ];
+      };
+    };
   });
 }
