@@ -15,6 +15,13 @@
     packages = {
       haskellProject = haskell.callCabal2nix "myProject" ./. {};
     };
+    checks = {
+      fmt = pkgs.runCommand "format" {} ''
+        set -o errexit
+        ${pkgs.ormolu}/bin/ormolu --mode check ${exe/Main.hs}
+        mkdir $out
+      '';
+    };
     devShells = {
       default = pkgs.mkShell {
         packages = [
