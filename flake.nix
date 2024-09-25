@@ -1,7 +1,19 @@
-#
-# Haskell on Nix, from development to production
-#
-# Julian K. Arni (jkarni)
-# CEO, garnix
-#
-# https://github.com/jkarni/haskellerz-september-2024
+{
+  description = "A Haskell package";
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
+
+  outputs = inputs :
+    inputs.flake-utils.lib.eachDefaultSystem (system:
+     let pkgs = inputs.nixpkgs.legacyPackages.${system};
+         haskell = pkgs.haskell.packages.ghc98;
+     in
+  {
+    packages = {
+      haskellProject = haskell.callCabal2nix "myProject" ./. {};
+    };
+  });
+}
