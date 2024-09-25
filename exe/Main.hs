@@ -22,5 +22,5 @@ data API route = API
 server :: API AsServer
 server =
   API
-    { endpoint = pure 1781
+    { endpoint = pure 1783
     }
