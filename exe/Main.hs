@@ -11,7 +11,7 @@ import Servant.Server.Generic
 import System.Environment
 
 main :: IO ()
-main = do
+main =   do
   [port] <- getArgs
   run (read port) $ genericServe server
 
